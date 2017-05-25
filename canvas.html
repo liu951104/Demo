@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 user-scalable=no">
+	<title>Canvas绘图</title>
+    <script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+        #img-box{
+            margin:0 auto;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <canvas class="iCanvas" width="360" height="600"></canvas> -->
+    <img src="" alt="" id="res">
+    <div id="img-box"></div>
+    <script>
+        // var canvas = document.getElementById('iCanvas');
+
+        // if(canvas.getContext){
+        //     var ctx = canvas.getContext('2d');
+        // }
+
+        var Api = {
+            //获取页面宽度
+            clientWidth:document.body.clientWidth
+        }
+
+        let image = new Image();
+
+        image.onload = function(){
+            var canvas = document.createElement('canvas');
+            var imgW = image.width;
+            var imgH = image.height;
+            //图片宽高比
+            var prop = imgW/imgH;
+            var rWidth = Api.clientWidth;
+            rWidth > imgW ? rWidth = imgW : rWidth = rWidth;
+
+            image.width = rWidth;
+            // image.height = 375/prop;
+            console.log(rWidth)
+            canvas.width = rWidth;
+            canvas.height = rWidth/prop;
+            canvas.getContext('2d').drawImage(image,0,0,rWidth,rWidth/prop);
+
+            // console.log(canvas.toDataURL("image/png"))
+            //插入
+            var imgBox = document.getElementById("res");
+
+            imgBox.src = canvas.toDataURL("image/png");
+            
+            // imgBox.appendChild(canvas);
+            // return canvas
+
+
+        }
+
+        // 如果图片跨域
+        image.setAttribute('crossOrigin', 'anonymous')
+        image.src = 'https://m.qlchat.com/api/wechat/image-proxy?url=https%3A%2F%2Fimg.qlchat.com%2FqlLive%2FadminImg%2FH7J8YHYD-5WQR-IF6C-1494218726230-Z1DIEBX3PB9A.jpg';
+
+    </script>
+</body>
+</html>
